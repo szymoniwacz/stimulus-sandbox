@@ -1,3 +1,7 @@
 <div data-controller="to-do-list">
-  <p data-to-do-list-target="message">Waiting for Stimulus...</p>
+  <input type="text" data-to-do-list-target="input" placeholder="Add new item">
+  <button data-action="click->to-do-list#addNewItem">Add Item</button>
+  <ul data-to-do-list-target="items">
+    <!-- List items will be added here -->
+  </ul>
 </div>
