@@ -24,9 +24,30 @@ export default class extends Controller {
   }
 
   appendItem(data) {
-    const newItem = document.createElement("li");
-    newItem.textContent = data.title;  // Change here to use 'title'
-    this.itemsTarget.appendChild(newItem);
+    const li = document.createElement("li");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = data.checked;
+    checkbox.id = `checked_${data.id}`;
+    checkbox.setAttribute("data-action", "change->to-do-list#toggleChecked");
+    checkbox.setAttribute("data-id", data.id);
+
+    const label = document.createElement("label");
+    label.setAttribute("for", checkbox.id);
+    label.textContent = data.title;
+    label.classList.add("item-label");
+
+    // Add the checkbox to the list item
+    li.appendChild(checkbox);
+    li.appendChild(label);
+
+    // Add classes for checked items
+    if (data.checked) {
+      label.classList.add('checked-item');
+    }
+
+    // Append the list item to the list
+    this.itemsTarget.appendChild(li);
   }
 
   toggleChecked(event) {
