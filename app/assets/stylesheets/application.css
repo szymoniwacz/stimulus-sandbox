@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+ .checked-item {
+  text-decoration: line-through;
+  opacity: 0.6;
+}

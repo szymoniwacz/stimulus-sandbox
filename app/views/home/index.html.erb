@@ -3,9 +3,9 @@
   <button data-action="click->to-do-list#addNewItem">Add Title</button>
   <ul data-to-do-list-target="items">
     <% @todo_items.each do |item| %>
-      <li>
+      <li class="<%= 'checked-item' if item.checked %>">
         <%= check_box_tag "checked_#{item.id}", 'checked', item.checked, data: { action: "change->to-do-list#toggleChecked", id: item.id } %>
-        <%= item.title %>
+        <%= label_tag "checked_#{item.id}", item.title, class: "item-label", data: { to_do_list_target: "label" } %>
       </li>
     <% end %>
   </ul>

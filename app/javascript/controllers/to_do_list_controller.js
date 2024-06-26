@@ -43,11 +43,21 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Item updated:', data);
+      if (data.status === 'success') {
+        this.toggleLabelStyle(event.target);
+      }
     })
     .catch(error => console.log('Error updating item:', error));
   }
 
+  toggleLabelStyle(checkbox) {
+    const label = this.element.querySelector(`label[for='${checkbox.id}']`);
+    if (checkbox.checked) {
+      label.classList.add('checked-item');
+    } else {
+      label.classList.remove('checked-item');
+    }
+  }
   getCSRFToken() {
     return document.querySelector("[name='csrf-token']").getAttribute("content");
   }
