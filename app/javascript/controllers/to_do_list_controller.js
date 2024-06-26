@@ -1,19 +1,32 @@
 import { Controller } from "@hotwired/stimulus"
+import { csrfToken } from "@rails/ujs"
 
 export default class extends Controller {
   static targets = ["items", "input"]
 
-  connect() {
-    console.log("ToDoList controller connected")
+  addNewItem() {
+    const content = this.inputTarget.value.trim();
+    if (content !== "") {
+      fetch("/to_do_items", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken()
+        },
+        body: JSON.stringify({ to_do_item: { content: content } })
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.appendItem(data);
+        this.inputTarget.value = ""; // clear the input after adding
+      })
+      .catch(error => console.log(error));
+    }
   }
 
-  addNewItem() {
-    const itemContent = this.inputTarget.value;
-    if (itemContent.trim() !== "") {
-      const newItem = document.createElement("li");
-      newItem.textContent = itemContent;
-      this.itemsTarget.appendChild(newItem);
-      this.inputTarget.value = ""; // clear the input after adding
-    }
+  appendItem(data) {
+    const newItem = document.createElement("li");
+    newItem.textContent = data.content;
+    this.itemsTarget.appendChild(newItem);
   }
 }
