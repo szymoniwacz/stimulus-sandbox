@@ -1,6 +1,10 @@
 class ToDoItemsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  def index
+    render json: ToDoItem.all
+  end
+
   def create
     @todo_item = ToDoItem.new(todo_item_params)
     if @todo_item.save

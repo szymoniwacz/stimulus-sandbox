@@ -2,6 +2,8 @@
   <input type="text" data-to-do-list-target="input" placeholder="Add new title">
   <button data-action="click->to-do-list#addNewItem">Add Title</button>
   <ul data-to-do-list-target="items">
-    <!-- List items will be dynamically added here -->
+    <% @todo_items.each do |item| %>
+      <li><%= item.title %></li>
+    <% end %>
   </ul>
 </div>
